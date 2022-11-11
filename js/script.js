@@ -17,6 +17,7 @@ For assistance:
 --------------------------------------------------------- */
 const studentList = document.querySelector('.student-list')
 const linkList = document.querySelector('.link-list')
+const searchSection = document.querySelector('.header')
 
 /* Variables
 ---------------------------------------------------------- */
@@ -55,8 +56,6 @@ function showPage(list, page) {
   studentList.insertAdjacentHTML('beforeend', studentItem)
 }
 
-console.log(data)
-
 /**
  * Create the `addPagination` function
  * This function will create and insert/append the elements needed for the pagination buttons
@@ -76,18 +75,55 @@ function addPagination(list) {
   }
   linkList.insertAdjacentHTML('beforeend', button)
 
-  const buttons = document.querySelectorAll('button[type=\'button\']')
+  const buttons = document.querySelectorAll("button[type=\'button\']")
   buttons[0].className = 'active'
 
   linkList.addEventListener('click', (e) => {
-   if (e.target.tagName === 'BUTTON') {
-    document.getElementsByClassName('active')[0].className = ''
-    e.target.className = 'active'
-    showPage(list, e.target.textContent)
-   }
+    if (e.target.tagName === 'BUTTON') {
+      document.getElementsByClassName('active')[0].className = ''
+      e.target.className = 'active'
+      showPage(list, e.target.textContent)
+    }
+  })
+}
+
+/**
+ * Create the `addSearch` function
+ * This function will display the students found according to input
+ */
+function addSearch() {
+  let searchForm = `<label for="search" class="student-search">
+  <span>Search by name</span>
+  <input id="search" placeholder="Search by name...">
+  <button type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
+  </label>
+  `
+  searchSection.insertAdjacentHTML('beforeend', searchForm)
+
+  const searchBar = document.getElementById('search')
+
+  searchBar.addEventListener('keyup', (e) => {
+    const searchValue = searchBar.value.toUpperCase()
+
+    let arrayStudents = []
+
+    data.forEach((student) => {
+      const studentFullName = `${student.name.first} ${student.name.last}`.toUpperCase()
+      if (studentFullName.includes(searchValue)) {
+        arrayStudents.push(student)
+      }
+    })
+
+    showPage(arrayStudents, firstPage)
+    addPagination(arrayStudents)
+
+    if (arrayStudents.length === 0) {
+      studentList.insertAdjacentHTML('beforeend', `<h1 class="h1">No results found</h1>`)
+    }
   })
 }
 
 // Call functions
 showPage(data, firstPage)
 addPagination(data)
+addSearch()
