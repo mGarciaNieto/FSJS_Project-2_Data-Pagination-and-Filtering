@@ -39,7 +39,7 @@ function showPage(list, page) {
 
   studentList.innerHTML = ''
 
-  for (let i = 0; i < list.length; i++) {
+  list.forEach((item, i) => {
     if (i >= startIndex && i < endIndex) {
       studentItem += ` <li class="student-item cf">
       <div class="student-details">
@@ -53,7 +53,8 @@ function showPage(list, page) {
     </li>
   `
     }
-  }
+  })
+
   studentList.insertAdjacentHTML('beforeend', studentItem)
 }
 
