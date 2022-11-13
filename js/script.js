@@ -21,6 +21,7 @@ const searchSection = document.querySelector('.header')
 
 /* Variables
 ---------------------------------------------------------- */
+const students = data
 const itemsPerPage = 9
 const firstPage = 1
 
@@ -75,7 +76,7 @@ function addPagination(list) {
   }
   linkList.insertAdjacentHTML('beforeend', button)
 
-  const buttons = document.querySelectorAll("button[type=\'button\']")
+  const buttons = document.querySelectorAll("button[type='button']")
   buttons[0].className = 'active'
 
   linkList.addEventListener('click', (e) => {
@@ -103,27 +104,25 @@ function addSearch() {
   const searchBar = document.getElementById('search')
 
   searchBar.addEventListener('keyup', (e) => {
-    const searchValue = searchBar.value.toUpperCase()
+    let matchStudents = []
 
-    let arrayStudents = []
-
-    data.forEach((student) => {
+    for (const student of students) {
       const studentFullName = `${student.name.first} ${student.name.last}`.toUpperCase()
-      if (studentFullName.includes(searchValue)) {
-        arrayStudents.push(student)
+      if (studentFullName.includes(searchBar.value.toUpperCase())) {
+        matchStudents.push(student)
       }
-    })
+    }
 
-    showPage(arrayStudents, firstPage)
-    addPagination(arrayStudents)
+    showPage(matchStudents, firstPage)
+    addPagination(matchStudents)
 
-    if (arrayStudents.length === 0) {
+    if (matchStudents.length === 0) {
       studentList.insertAdjacentHTML('beforeend', `<h1 class="h1">No results found</h1>`)
     }
   })
 }
 
 // Call functions
-showPage(data, firstPage)
-addPagination(data)
+showPage(students, firstPage)
+addPagination(students)
 addSearch()

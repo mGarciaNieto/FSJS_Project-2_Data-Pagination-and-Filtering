@@ -42,8 +42,10 @@ header h2 {
 }
 
 h1 {
-  font-size: 30px;
-  color: #af9740;
+  font-size: 35px;
+  color: #999f40;
+  font-weight: 800;
+  text-transform: uppercase;
   letter-spacing: 2px;
   margin-bottom: 25px;
 }
