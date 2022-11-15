@@ -77,7 +77,7 @@ function addPagination(list) {
   }
   linkList.insertAdjacentHTML('beforeend', button)
 
-  const buttons = document.querySelectorAll("button[type='button']")
+  const buttons = document.querySelectorAll('button[type=\'button\']')
   buttons[0].className = 'active'
 
   linkList.addEventListener('click', (e) => {
@@ -94,7 +94,7 @@ function addPagination(list) {
  * This function will display the students found according to input
  */
 function addSearch() {
-  let searchForm = `<label for="search" class="student-search">
+  const searchForm = `<label for="search" class="student-search">
   <span>Search by name</span>
   <input id="search" placeholder="Search by name...">
   <button type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
